@@ -106,3 +106,9 @@ dist
 .vs/*
 temporary_files/simple_csharp_project
 temporary_files/simple_csharp_dll
+# *.config
+# *.sln
+# **/.vs
+# *.dll
+# **/bin/Debug/*
+# *csprog*

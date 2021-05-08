@@ -1,41 +1,89 @@
+// IDictionary<string,object>
 const Joi = require('joi');
 const express = require('express');
 const app = express();
 app.use(express.json());
+var edge = require('edge-js');
 
 const models = [
-    { id: 1, name: "model1"},
-    { id: 2, name: "model2"},
-    { id: 3, name: "model3"},
+    { id: 1, name: "model1", model_type: "hybrid"},
+    { id: 2, name: "model2", model_type: "regression"},
 ]
 
 const port = 9876;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
+
+// get dlls and functions
+const dll_path = '../temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin/Debug/ClassLibrary1.dll';
+let regression_dll_name = require('path').join(__dirname, dll_path);
+var learn_regression = edge.func({
+    assemblyFile: regression_dll_name,
+    typeName: 'Startup', // change those names according to the relevant names 
+    methodName: 'Regression' // This must be Func<object,Task<object>>
+});
+
+let hybrid_dll_name = require('path').join(__dirname, dll_path);
+var learn_hybrid = edge.func({
+    assemblyFile: hybrid_dll_name,
+    typeName: 'Startup', // change those names according to the relevant names 
+    methodName: 'Hybrid' // This must be Func<object,Task<object>>
+});
 
 // main window
 app.get('/', (req, res) => {
     res.send('Welcome');
 });
 
+// train new model
 app.post('/api/model', (req, res) => {
-    // shape of object
-    const schema = Joi.object({
-        name: Joi.string().min(3).required()
+    // get model type from query line. send by /?model_type=<model_type>
+    const schema_query = Joi.object({
+        model_type: Joi.string().valid('regression','hybrid').required()
     });
-    const result = schema.validate(req.body);
-    console.log(result);
 
-    if (result.error) {
-        res.status(400).send(result.error.details[0].message);
+    // validate query
+    const result_query = schema_query.validate(req.query);
+    console.log(result_query);
+
+    // throw an error if wrong
+    if (result_query.error) {
+        res.status(400).send(result_query.error.details[0].message);
         return;
     }
 
+    train_data = req.body.train_data;
+    if (train_data === undefined)
+        return res.status(400).send("train_data is reqired in request body");
+    let data = new Data(train_data);
+    // for (var key in train_data) {
+    //     console.log(key);
+    // }
+
     const model = {
         id: models.length + 1,
-        name: req.body.name
+        name: req.body.name,
+        model_type: req.query.model_type
     }
+
+    // if model_type is hybrid:
+    if (req.query.model_type === 'hybrid') {
+        learn_hybrid(data, function (error, result) {
+            if (error) throw error;
+            // console.log(result);
+            // res.send(`the result is: ${result}`);
+            console.log(`the result is: ${result}`);
+        });
+    } else { // if model_type is regression:
+        learn_regression(data, function (error, result) {
+            if (error) throw error;
+            // console.log(result);
+            // res.send(`the result is: ${result}`);
+            console.log(`the result is: ${result}`);
+        });
+    }
+
+    // push new model to list and send back by convention
     models.push(model);
-    // by convention
     res.send(model);
 });
 
@@ -96,6 +144,14 @@ class Model {
         this.status = "pending";
     }
     // some extra function may be needed
+}
+
+class Data {
+    constructor(dataJSON) {
+        this.dataJSON = dataJSON;
+        this.names = Object.keys(dataJSON);
+        console.log(this.names);
+    }
 }
 
 class Anomaly {

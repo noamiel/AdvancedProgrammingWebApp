@@ -4,6 +4,7 @@ const app = express();
 app.use(express.json());
 var edge = require('edge-js');
 
+// get function from dll
 let dllName = require('path').join(__dirname, '../simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin/Debug/ClassLibrary1.dll');
 var add7 = edge.func({
     assemblyFile: dllName,
@@ -19,6 +20,7 @@ var add7 = edge.func({
  * for more info: https://github.com/agracio/edge-js
  */
 
+// use the function
 app.get('/', (req, res) => {
     add7(10, function (error, result) {
         if (error) throw error;
