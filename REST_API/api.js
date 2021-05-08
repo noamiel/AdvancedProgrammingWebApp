@@ -67,21 +67,21 @@ app.post('/api/model', (req, res) => {
 
     // if model_type is hybrid:
     if (req.query.model_type === 'hybrid') {
-        learn_hybrid(data, function (error, result) {
+        learn_hybrid(data.dataJSON, function (error, result) {
             if (error) throw error;
             // console.log(result);
             // res.send(`the result is: ${result}`);
             console.log(`the result is: ${result}`);
         });
     } else { // if model_type is regression:
-        learn_regression(data, function (error, result) {
+        learn_regression(data.dataJSON, function (error, result) {
             if (error) throw error;
             // console.log(result);
             // res.send(`the result is: ${result}`);
             console.log(`the result is: ${result}`);
         });
     }
-
+//
     // push new model to list and send back by convention
     models.push(model);
     res.send(model);

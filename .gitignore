@@ -105,10 +105,11 @@ dist
 
 .vs/*
 temporary_files/simple_csharp_project
-temporary_files/simple_csharp_dll
-# *.config
-# *.sln
-# **/.vs
-# *.dll
-# **/bin/Debug/*
-# *csprog*
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/obj
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/Properties
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*.config
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*proj
+temporary_files/simple_csharp_dll/ClassLibrary1/*.sln
+temporary_files/simple_csharp_dll/ClassLibrary1/packages
+temporary_files/simple_csharp_dll/ClassLibrary1/.vs
