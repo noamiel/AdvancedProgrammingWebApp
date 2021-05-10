@@ -6,9 +6,11 @@ app.use(express.json());
 var edge = require('edge-js');
 
 const models = [
-    { id: 1, name: "model1", model_type: "hybrid"},
-    { id: 2, name: "model2", model_type: "regression"},
+    { id: 1, name: "model1", model_type: "hybrid" },
+    { id: 2, name: "model2", model_type: "regression" },
 ]
+
+const models_list = []
 
 const port = 9876;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
@@ -29,6 +31,8 @@ var learn_hybrid = edge.func({
     methodName: 'Hybrid' // This must be Func<object,Task<object>>
 });
 
+const learn_dictionary = { 'hybrid': learn_hybrid, 'regression': learn_regression }
+
 // main window
 app.get('/', (req, res) => {
     res.send('Welcome');
@@ -38,7 +42,7 @@ app.get('/', (req, res) => {
 app.post('/api/model', (req, res) => {
     // get model type from query line. send by /?model_type=<model_type>
     const schema_query = Joi.object({
-        model_type: Joi.string().valid('regression','hybrid').required()
+        model_type: Joi.string().valid('regression', 'hybrid').required()
     });
 
     // validate query
@@ -53,38 +57,66 @@ app.post('/api/model', (req, res) => {
 
     train_data = req.body.train_data;
     if (train_data === undefined)
-        return res.status(400).send("train_data is reqired in request body");
+        return res.status(400).send("train_data is required in request body");
     let data = new Data(train_data);
-    // for (var key in train_data) {
-    //     console.log(key);
-    // }
 
-    const model = {
-        id: models.length + 1,
-        name: req.body.name,
-        model_type: req.query.model_type
-    }
+    let id = models_list.length
+    let model = new Model(id, (new Date()).toUTCString(), "pending")
+    models_list.push(model)
 
-    // if model_type is hybrid:
-    if (req.query.model_type === 'hybrid') {
-        learn_hybrid(data.dataJSON, function (error, result) {
-            if (error) throw error;
-            // console.log(result);
-            // res.send(`the result is: ${result}`);
-            console.log(`the result is: ${result}`);
-        });
-    } else { // if model_type is regression:
-        learn_regression(data.dataJSON, function (error, result) {
-            if (error) throw error;
-            // console.log(result);
-            // res.send(`the result is: ${result}`);
-            console.log(`the result is: ${result}`);
-        });
-    }
-//
+    // run learn function based on type
+    learn_dictionary[req.query.model_type](data.dataJSON, function (error, result) {
+        if (error) throw error;
+        console.log(`the result is: ${result}`);
+        models_list[id].status = "ready"
+    })
+
     // push new model to list and send back by convention
-    models.push(model);
-    res.send(model);
+    // models_list[id].status = "ready"
+    res.send(model)
+});
+
+// train new model
+app.post('/api/anomaly', (req, res) => {
+    // get model type from query line. send by /?model_type=<model_type>
+    const schema_query = Joi.object({
+        model_id: Joi.number().integer().min(0).max(models_list.length).required()
+    });
+
+    // validate query
+    const result_query = schema_query.validate(req.query);
+    console.log(result_query);
+
+    // throw an error if wrong
+    if (result_query.error) {
+        res.status(400).send(result_query.error.details[0].message);
+        return;
+    }
+
+    train_data = req.body.train_data;
+    if (train_data === undefined)
+        return res.status(400).send("train_data is required in request body");
+    let data = new Data(train_data);
+
+    let id = models_list.length
+    let model = new Model(id, (new Date()).toUTCString(), "pending")
+    models_list.push(model)
+
+    // run learn function based on type
+    learn_dictionary[req.query.model_type](data.dataJSON, function (error, result) {
+        if (error) throw error;
+        console.log(`the result is: ${result}`);
+        models_list[id].status = "ready"
+    })
+
+    // push new model to list and send back by convention
+    // models_list[id].status = "ready"
+    res.send(model)
+});
+
+
+app.get('/api/models', (req, res) => {
+    res.send(models_list);
 });
 
 app.get('/api/model', (req, res) => {
@@ -138,6 +170,7 @@ app.get('/api/models', (req, res) => {
  */
 
 class Model {
+
     constructor(id, upload_time) {
         this.id = id;
         this.upload_time = upload_time;

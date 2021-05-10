@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using System.ComponentModel;
 
@@ -18,6 +19,7 @@ public class Startup
 
     public async Task<object> Regression(dynamic input)
     {
+        await Task.Delay(3000);
         IDictionary<string, object> d = (IDictionary<string, object>)(input);
         Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
         foreach (KeyValuePair<string, object> entry in d)
@@ -42,7 +44,7 @@ public class Startup
             foreach (var item in anArray)
                 jsonDict[entry.Key].Add(double.Parse(item.ToString()));
         }
-
+        await Task.Delay(3000);
         return jsonDict[jsonDict.Keys.First()][0];
     }
 }
