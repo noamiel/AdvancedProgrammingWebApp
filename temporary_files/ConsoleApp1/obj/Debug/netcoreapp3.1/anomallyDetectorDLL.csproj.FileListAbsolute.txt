@@ -1,0 +1,13 @@
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.exe
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.deps.json
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.runtimeconfig.json
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.runtimeconfig.dev.json
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.dll
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.pdb
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.csprojAssemblyReference.cache
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.AssemblyInfoInputs.cache
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.AssemblyInfo.cs
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.csproj.CoreCompileInputs.cache
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.dll
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.pdb
+C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.genruntimeconfig.cache
