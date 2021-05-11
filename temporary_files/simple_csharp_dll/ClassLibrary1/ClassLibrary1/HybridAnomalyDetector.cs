@@ -9,6 +9,7 @@ namespace ClassLibrary1
         public static void LearnNormal(TimeSeries ts)
         {
             List<string> atts = ts.GettAttributes();
+            // Console.WriteLine(atts[0]);
             int len = ts.GetRowSize();
             int attsSize = atts.Count;
             double[,] vals = new double[attsSize, len];

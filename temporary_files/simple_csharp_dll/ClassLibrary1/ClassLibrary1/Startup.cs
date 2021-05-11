@@ -20,21 +20,16 @@ namespace ClassLibrary1
                 HybridAnomalyDetector.detect(anomaly);
                 int a = 1; */
 
-        public async Task<object> RegressionCSV(dynamic input)
+        public async Task<object> HybridCSV(dynamic input)
         {
             await Task.Delay(1);
+            string csv_name = (string)input.csv_name;
+            // string model_type = (string)input.model_type;
+            // string passed_data_type = (string)input.passed_data_type;
 
-            IDictionary<string, object> d = (IDictionary<string, object>)(input);
-            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
-            foreach (KeyValuePair<string, object> entry in d)
-            {
-                object[] anArray = (object[])entry.Value;
-                jsonDict[entry.Key] = new List<double>();
-                foreach (var item in anArray)
-                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
-            }
-
-            return jsonDict[jsonDict.Keys.First()][0];
+            TimeSeries ts = new TimeSeries(csv_name);
+            HybridAnomalyDetector.LearnNormal(ts);
+            return 0;
         }
 
         public async Task<object> Regression(dynamic input)
