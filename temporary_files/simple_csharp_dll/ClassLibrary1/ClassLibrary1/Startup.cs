@@ -1,50 +1,71 @@
-﻿using DynamicExpresso;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Threading;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using System.ComponentModel;
 
-public class Startup
+namespace ClassLibrary1
 {
-    /* public async Task<object> Invoke(object input)
+    public class Startup
     {
-        int v = (int)input;
-        return Helper.AddSeven(v);
-    }*/
-
-    public async Task<object> Regression(dynamic input)
-    {
-        await Task.Delay(3000);
-        IDictionary<string, object> d = (IDictionary<string, object>)(input);
-        Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
-        foreach (KeyValuePair<string, object> entry in d)
+        /* public async Task<object> Invoke(object input)
         {
-            object[] anArray = (object[])entry.Value;
-            jsonDict[entry.Key] = new List<double>();
-            foreach (var item in anArray)
-                jsonDict[entry.Key].Add(double.Parse(item.ToString()));
+            int v = (int)input;
+            return Helper.AddSeven(v);
+        }*/
+
+        /* timeseries ts = new timeseries("C://Users//omerz//Desktop//אוניברסיטה//web app//file1.csv");
+                timeseries anomaly = new timeseries("C://Users//omerz//Desktop//אוניברסיטה//web app//anomaly_flight.csv");
+                Console.WriteLine(ts.getRowSize());
+
+                HybridAnomalyDetector.learnNormal(ts);
+                HybridAnomalyDetector.detect(anomaly);
+                int a = 1; */
+
+        public async Task<object> RegressionCSV(dynamic input)
+        {
+            await Task.Delay(1);
+
+            IDictionary<string, object> d = (IDictionary<string, object>)(input);
+            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
+            foreach (KeyValuePair<string, object> entry in d)
+            {
+                object[] anArray = (object[])entry.Value;
+                jsonDict[entry.Key] = new List<double>();
+                foreach (var item in anArray)
+                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
+            }
+
+            return jsonDict[jsonDict.Keys.First()][0];
         }
 
-        return jsonDict[jsonDict.Keys.First()][0];
-    }
-
-    public async Task<object> Hybrid(dynamic input)
-    {
-        IDictionary<string, object> d = (IDictionary<string, object>)(input);
-        Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
-        foreach (KeyValuePair<string, object> entry in d)
+        public async Task<object> Regression(dynamic input)
         {
-            object[] anArray = (object[])entry.Value;
-            jsonDict[entry.Key] = new List<double>();
-            foreach (var item in anArray)
-                jsonDict[entry.Key].Add(double.Parse(item.ToString()));
+            await Task.Delay(3000);
+            IDictionary<string, object> d = (IDictionary<string, object>)(input);
+            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
+            foreach (KeyValuePair<string, object> entry in d)
+            {
+                object[] anArray = (object[])entry.Value;
+                jsonDict[entry.Key] = new List<double>();
+                foreach (var item in anArray)
+                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
+            }
+
+            return jsonDict[jsonDict.Keys.First()][0];
         }
-        await Task.Delay(3000);
-        return jsonDict[jsonDict.Keys.First()][0];
+
+        public async Task<object> Hybrid(dynamic input)
+        {
+            IDictionary<string, object> d = (IDictionary<string, object>)(input);
+            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
+            foreach (KeyValuePair<string, object> entry in d)
+            {
+                object[] anArray = (object[])entry.Value;
+                jsonDict[entry.Key] = new List<double>();
+                foreach (var item in anArray)
+                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
+            }
+            await Task.Delay(3000);
+            return jsonDict[jsonDict.Keys.First()][0];
+        }
     }
 }

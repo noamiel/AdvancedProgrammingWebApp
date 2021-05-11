@@ -20,14 +20,15 @@ const dll_path = '../temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrar
 let regression_dll_name = require('path').join(__dirname, dll_path);
 var learn_regression = edge.func({
     assemblyFile: regression_dll_name,
-    typeName: 'Startup', // change those names according to the relevant names 
-    methodName: 'Regression' // This must be Func<object,Task<object>>
+    typeName: 'ClassLibrary1.Startup', // change those names according to the relevant names 
+    methodName: 'Regression'            // This must be Func<object,Task<object>>
 });
 
 let hybrid_dll_name = require('path').join(__dirname, dll_path);
 var learn_hybrid = edge.func({
     assemblyFile: hybrid_dll_name,
-    typeName: 'Startup', // change those names according to the relevant names 
+    // nameSpace: 'ClassLibrary1',
+    typeName: 'ClassLibrary1.Startup', // change those names according to the relevant names 
     methodName: 'Hybrid' // This must be Func<object,Task<object>>
 });
 
