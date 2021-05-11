@@ -104,6 +104,7 @@ dist
 .tern-port
 
 .vs/*
+.vscode/*
 temporary_files/simple_csharp_project
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/obj
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/Properties

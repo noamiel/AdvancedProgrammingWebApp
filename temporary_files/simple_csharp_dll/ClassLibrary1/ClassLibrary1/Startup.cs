@@ -11,11 +11,11 @@ using System.ComponentModel;
 
 public class Startup
 {
-    public async Task<object> Invoke(object input)
+    /* public async Task<object> Invoke(object input)
     {
         int v = (int)input;
         return Helper.AddSeven(v);
-    }
+    }*/
 
     public async Task<object> Regression(dynamic input)
     {
@@ -47,11 +47,4 @@ public class Startup
         await Task.Delay(3000);
         return jsonDict[jsonDict.Keys.First()][0];
     }
-}
-
-public class Result
-{
-    public int id { get; set; }
-    public string value { get; set; }
-    public string info { get; set; }
 }
