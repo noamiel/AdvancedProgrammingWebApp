@@ -15,7 +15,7 @@ namespace ClassLibrary1
             if (x.Count != y.Count)
                 throw new ArgumentException($"both lengths must be equal, but got {x.Count}, {y.Count}");
             Point[] ps = new Point[size];
-            Console.WriteLine($"size: {x.Count}");
+            // Console.WriteLine($"size: {x.Count}");
             for (int i = 0; i < size; i++)
             {
                 // Console.WriteLine($"({x[i]},{y[i]})");
