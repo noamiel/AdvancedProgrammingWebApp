@@ -6,29 +6,19 @@ namespace ClassLibrary1
 {
     public class Startup
     {
-        /* public async Task<object> Invoke(object input)
-        {
-            int v = (int)input;
-            return Helper.AddSeven(v);
-        }*/
 
-        /* timeseries ts = new timeseries("C://Users//omerz//Desktop//אוניברסיטה//web app//file1.csv");
-                timeseries anomaly = new timeseries("C://Users//omerz//Desktop//אוניברסיטה//web app//anomaly_flight.csv");
-                Console.WriteLine(ts.getRowSize());
-
-                HybridAnomalyDetector.learnNormal(ts);
-                HybridAnomalyDetector.detect(anomaly);
-                int a = 1; */
-
-        public async Task<object> HybridCSV(dynamic input)
+        public async Task<object> LearnCSV(dynamic input)
         {
             await Task.Delay(1);
             string csv_name = (string)input.csv_name;
-            // string model_type = (string)input.model_type;
+            string model_type = (string)input.model_type;
             // string passed_data_type = (string)input.passed_data_type;
 
             TimeSeries ts = new TimeSeries(csv_name);
-            HybridAnomalyDetector.LearnNormal(ts);
+            if (model_type == "hybrid")
+                HybridAnomalyDetector.LearnNormal(ts);
+            else
+                RegressionAnomalyDetector.LearnNormal(ts);
             return 0;
         }
 

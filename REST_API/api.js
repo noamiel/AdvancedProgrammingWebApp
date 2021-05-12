@@ -48,11 +48,11 @@ var learn_hybrid = edge.func({
     methodName: 'Hybrid' // This must be Func<object,Task<object>>
 });
 
-var learn_hybrid_csv = edge.func({
+var learn_from_csv = edge.func({
     assemblyFile: dll_name,
     // nameSpace: 'ClassLibrary1',
     typeName: 'ClassLibrary1.Startup', // change those names according to the relevant names 
-    methodName: 'HybridCSV' // This must be Func<object,Task<object>>
+    methodName: 'LearnCSV' // This must be Func<object,Task<object>>
 });
 
 const learn_dictionary = {
@@ -100,7 +100,7 @@ app.post('/upload-avatar', async (req, res) => {
         "model_type": req.query.model_type, 
         "passed_data_type": "csv"
     }
-    learn_hybrid_csv(data, function (error, result) {
+    learn_from_csv(data, function (error, result) {
         if (error) throw error;
         console.log(`the result is: ${result}`);
         models_list[id].status = "ready"

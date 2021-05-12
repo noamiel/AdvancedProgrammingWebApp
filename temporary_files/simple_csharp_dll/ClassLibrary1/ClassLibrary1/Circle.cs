@@ -70,6 +70,8 @@ namespace ClassLibrary1
 
         public static Circle Welzl(Point[] P, List<Point> R, int n)
         {
+            if (n < 0)
+                throw new ArgumentException("n must be larger than 0 (or equal to it)");
             if (n == 0 || R.Count == 3)
             {
                 return Trivial(R);
@@ -84,6 +86,7 @@ namespace ClassLibrary1
             Point temp = P[0];
             P[0] = P[n - 1];
             P[n - 1] = temp;
+            // Console.WriteLine(n);
             Circle c = Welzl(P, R, n - 1);
 
             if (Dist(p, c.Center) <= c.Radius)
