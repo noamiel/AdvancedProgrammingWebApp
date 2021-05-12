@@ -114,3 +114,6 @@ temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*proj
 temporary_files/simple_csharp_dll/ClassLibrary1/*.sln
 temporary_files/simple_csharp_dll/ClassLibrary1/packages
 temporary_files/simple_csharp_dll/ClassLibrary1/.vs
+
+# REST_API/uploads/
+REST_API/uploads/reg_flight.csv
