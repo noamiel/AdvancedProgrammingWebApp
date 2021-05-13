@@ -34,7 +34,7 @@ const models_list = []
 
 // initiate server
 // in order to run it: nodemon api.js
-const port = 9876;
+const port = 8080;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
 
 // get dlls and functions
@@ -53,6 +53,76 @@ var learn_from_csv = edge.func({
 app.get('/', (req, res) => {
     res.send('Welcome')
 })
+
+// send via post 2 csv files + model type (as query) and get some dummy data (as for now)
+app.post('/dummy_detect', async (req, res) => {
+    // get model type from query line. send by /?model_type=<model_type>
+    const schema_query = Joi.object({
+        model_type: Joi.string().valid('regression', 'hybrid').required()
+    });
+
+    // validate query
+    const result_query = schema_query.validate(req.query);
+
+    // throw an error if wrong
+    if (result_query.error) {
+        res.status(400).send(result_query.error.details[0].message);
+        return;
+    }
+
+    if (!req.files)
+        return res.status(400).send("No file uploaded");
+    if (!req.files.learn_csv)
+        return res.status(400).send("`learn_csv` was not uploaded");
+    if (!req.files.anomaly_csv)
+        return res.status(400).send("`anomaly_csv` was not uploaded");
+
+    // Use the name of the input field to retrieve the uploaded file
+    let learn_csv = req.files.learn_csv;
+    let anomaly_csv = req.files.anomaly_csv;
+    if (!learn_csv.name.endsWith(".csv") || !anomaly_csv.name.endsWith(".csv"))
+        return res.status(400).send("both files must be of csv type")
+
+    // Use the mv() method to place the file in upload directory (i.e. "uploads")
+    learn_csv.mv('./uploads/' + learn_csv.name);
+    anomaly_csv.mv('./uploads/' + anomaly_csv.name);
+
+    // create model
+    let id = models_list.length
+    let model = new Model(id, (new Date()).toUTCString(), "pending")
+    models_list.push(model)
+    const uploaded_file_name = `${process.cwd()}/uploads/${learn_csv.name}`
+
+    // run learn function based on type
+    let data = {
+        "csv_name": uploaded_file_name, 
+        "model_type": req.query.model_type, 
+        "passed_data_type": "csv"
+    }
+
+    // run c# code asynchoniously
+    learn_from_csv(data, function (error, result) {
+        // before submitting, we have to change it to print error and remove model
+        if (error) throw error;
+        models_list[id].status = "ready"
+    })
+
+    // create dummy Anomaly
+    let A = new Anomaly({
+        col1: [new Span(1, 5), new Span(7,22)],
+        col2: [new Span(10, 15), new Span(33,100)],
+        col3: [new Span(12, 20), new Span(51,52), new Span(62,84)],
+    });
+    // create and return data
+    let return_data = {
+        anomalies: A,
+        reason: "whatever"
+    }
+    res.send(return_data)
+});
+
+
+
 
 // tarin new model. this is the request your'e looking for
 app.post('/csv/model', async (req, res) => {
@@ -212,9 +282,9 @@ class Model {
 }
 
 class Anomaly {
-    constructor(anomalies, reason) {
-        this.anomalies = anomalies;
-        this.reason = reason;
+    constructor(anomalies_dict) {
+        this.anomalies_dict = anomalies_dict;
+        // this.reason = reason;
     }
     // some extra function may be needed
 }
