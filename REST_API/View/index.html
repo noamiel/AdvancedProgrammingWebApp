@@ -5,19 +5,23 @@
     <title>Anomaly Detection</title>
 </head>
 <body>
-<form action="/csv/model" method="post" enctype="multipart/form-data" name="searchForm" target="result">
+<form action="/dummy_detect" method="post" enctype="multipart/form-data" name="searchForm" target="result">
     <table>
         <tr>
-            <td><input type="text" name="key"></td>
-            <td>מילת חיפוש</td>
+            <td><input type="file" name="learn_csv"></td>
+            <td>learn_csv</td>
         </tr>
         <tr>
-            <td><input type="file" name="text_file"></td>
-            <td>קובץ טקסט</td>
+            <td><input type="file" name="anomaly_csv"></td>
+            <td>anomaly_csv</td>
+        </tr>
+        <tr>
+            <td><input type="text" name="model_type"></td>
+            <td>model type</td>
         </tr>
         <br>
     </table>
-    <input type="submit" value="שלח קובץ">
+    <input type="submit" value="send files">
 </form>
 <br>
 <iframe name="result" width="80%" height="500"></iframe>

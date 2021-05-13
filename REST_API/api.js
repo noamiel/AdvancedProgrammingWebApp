@@ -49,9 +49,10 @@ var learn_from_csv = edge.func({
     methodName: 'LearnCSV'              // This must be Func<object,Task<object>>
 });
 
-// main window
+app.use(express.static('View'))
+//Get Method for '/' url
 app.get('/', (req, res) => {
-    res.send('Welcome')
+    res.sendFile('index.html')
 })
 
 // send via post 2 csv files + model type (as query) and get some dummy data (as for now)
@@ -62,7 +63,7 @@ app.post('/dummy_detect', async (req, res) => {
     });
 
     // validate query
-    const result_query = schema_query.validate(req.query);
+    const result_query = schema_query.validate(req.body);
 
     // throw an error if wrong
     if (result_query.error) {
