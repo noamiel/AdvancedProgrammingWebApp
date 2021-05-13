@@ -107,7 +107,39 @@ app.post('/csv/model', async (req, res) => {
     res.send(model)
 });
 
-// train new model - REST api
+
+// using this request you can see the uploaded models and see if the model had been processed yet
+app.get('/api/models', (req, res) => {
+    res.send(models_list);
+});
+
+// using this you can pick a specific model to show
+app.get('/api/model', (req, res) => {
+    // get model type from query line. send by /?model_type=<model_type>
+    const schema_query = Joi.object({
+        id: Joi.number().integer().required()
+    });
+
+    // validate query
+    const result_query = schema_query.validate(req.query);
+    console.log(result_query);
+
+    // throw an error if wrong
+    if (result_query.error) {
+        res.status(400).send(result_query.error.details[0].message);
+        return;
+    }
+    // first find the given model
+    let model = models_list.find(c => c.id === parseInt(req.query.id));
+    if (!model) return res.status(404).send("the model was not found");
+
+    // return it if found
+    res.send(model);
+});
+
+
+
+/* // train new model - REST api
 // not actually needed but I keep it anyway in case some of what written in here would be useful/
 app.post('/api/model', (req, res) => {
     // get model type from query line. send by /?model_type=<model_type>
@@ -146,35 +178,6 @@ app.post('/api/model', (req, res) => {
     res.send(model)
 });
 
-// using this request you can see the uploaded models and see if the model had been processed yet
-app.get('/api/models', (req, res) => {
-    res.send(models_list);
-});
-
-// using this you can pick a specific model to show
-app.get('/api/model', (req, res) => {
-    // get model type from query line. send by /?model_type=<model_type>
-    const schema_query = Joi.object({
-        id: Joi.number().integer().required()
-    });
-
-    // validate query
-    const result_query = schema_query.validate(req.query);
-    console.log(result_query);
-
-    // throw an error if wrong
-    if (result_query.error) {
-        res.status(400).send(result_query.error.details[0].message);
-        return;
-    }
-    // first find the given model
-    let model = models_list.find(c => c.id === parseInt(req.query.id));
-    if (!model) return res.status(404).send("the model was not found");
-
-    // return it if found
-    res.send(model);
-});
-
 // the same as the previous one
 app.get('/api/model/:id', (req, res) => {
     // first find the given model
@@ -195,7 +198,7 @@ app.delete('/api/model', (req, res) => {
     const index = models.indexOf(model);
     models.splice(index, 1);
     res.send(model);
-});
+}); */
 
 // those are JavaScript classes which are needed for the project
 // don't change `Model` but you can change the rest of them
