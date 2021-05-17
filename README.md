@@ -2,7 +2,7 @@
 
 web app project for advanced programming project in BIU
 
-## requierd installments
+## required installments
 
 - npm -i install nodemon
 - npm -i install express

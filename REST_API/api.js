@@ -113,6 +113,7 @@ app.post('/dummy_detect', async (req, res) => {
         console.log(result.length)
         console.log(result[0])
         // r = result
+        // TODO: put this whole thing in the c# code instead (according to what I did at ML #1)
         // let B = new Anomaly(result_to_anomalies(result))
     })
 
