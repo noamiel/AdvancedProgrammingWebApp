@@ -11,7 +11,7 @@ namespace ClassLibrary1
         {
             Description = description;
             Timestep = timestep;
-            Console.WriteLine(description + " " + timestep);
+            // Console.WriteLine(description + " " + timestep);
         }
 
         public AnomalyReport()

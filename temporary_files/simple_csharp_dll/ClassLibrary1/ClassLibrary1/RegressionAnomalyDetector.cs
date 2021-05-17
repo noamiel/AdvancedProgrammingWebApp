@@ -42,6 +42,7 @@ namespace ClassLibrary1
 
                 LearnHelper(ts, max, f1, f2, ps);
             }
+            Console.WriteLine(cf.Count());
         }
 
         public static void LearnHelper(TimeSeries ts, double p/*pearson*/, string f1, string f2, Point[] ps)
@@ -71,7 +72,8 @@ namespace ClassLibrary1
                     {
                         string d = c.Feature1 + "!" + c.Feature2;
                         v.Add(new AnomalyReport(d, (i + 1)));
-                        Console.WriteLine(total++);
+                        total++;
+                        // Console.WriteLine(total++);
                     }
                 }
             }

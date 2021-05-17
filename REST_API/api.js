@@ -14,6 +14,7 @@ const morgan = require('morgan');
 const _ = require('lodash');
 const edge = require('edge-js');
 const Joi = require('joi');
+// const { runInThisContext } = require('node:vm');
 
 const app = express();
 
@@ -92,20 +93,27 @@ app.post('/dummy_detect', async (req, res) => {
     let id = models_list.length
     let model = new Model(id, (new Date()).toUTCString(), "pending")
     models_list.push(model)
-    const uploaded_file_name = `${process.cwd()}/uploads/${learn_csv.name}`
+    const uploaded_learn_name = `${process.cwd()}/uploads/${learn_csv.name}`
+    const uploaded_anomaly_name = `${process.cwd()}/uploads/${anomaly_csv.name}`
 
     // run learn function based on type
     let data = {
-        "csv_name": uploaded_file_name, 
+        "csv_learn": uploaded_learn_name, 
+        "csv_anomaly": uploaded_anomaly_name, 
         "model_type": req.query.model_type, 
         "passed_data_type": "csv"
     }
 
+    // let r;
     // run c# code asynchoniously
     learn_from_csv(data, function (error, result) {
         // before submitting, we have to change it to print error and remove model
         if (error) throw error;
         models_list[id].status = "ready"
+        console.log(result.length)
+        console.log(result[0])
+        // r = result
+        // let B = new Anomaly(result_to_anomalies(result))
     })
 
     // create dummy Anomaly
@@ -122,7 +130,27 @@ app.post('/dummy_detect', async (req, res) => {
     res.send(return_data)
 });
 
+function result_to_anomalies(result) {
+    B = new Anomaly([])
+    result.forEach(element => {
+        let d = B.anomalies_dict.find(c => c.description === element.Description);
+        if (!d) {
+            console.log(element)
+            console.log("element not found. creating new element")
+            B.anomalies_dict.push(new AnomalyReport(element.Timestep, element.Timestep, element.Description))
+        } else {
+            console.log("found!")
+            if (element.Timestep === d.start_time - 1)
+                d.set_start_time(element.Timestep)
+            if (element.Timestep === d.end_time + 1)
+                d.set_end_time(element.Timestep)
+            console.log(B.anomalies_dict.find(c => c.description === element.Description))
+        }
 
+    });
+    console.log(B.anomalies_dict.length)
+    return result;
+  }
 
 
 // tarin new model. this is the request your'e looking for
@@ -290,6 +318,30 @@ class Anomaly {
     // some extra function may be needed
 }
 
+class AnomalyReport {
+    #span
+    #description
+    constructor(start_time, end_time, description) {
+        this.#span = new Span(start_time, end_time)
+        this.#description = description
+    }
+
+    get description() {
+        return this.#description
+    }
+    get span() {
+        return this.#span
+      }
+    set span(span) {
+    this.#span = span
+    }
+    set_start_time(start_time) {
+        this.#span = new Span(start_time, this.#span.end_time)
+      }
+    set_end_time(end_time) {
+        this.#span = new Span(this.#span.start_time, end_time)
+    }
+}
 class Span {
     constructor(start_time, end_time) {
         this.start_time = start_time;

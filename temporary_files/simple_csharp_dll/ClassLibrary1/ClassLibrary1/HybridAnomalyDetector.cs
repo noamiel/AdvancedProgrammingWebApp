@@ -72,7 +72,6 @@ namespace ClassLibrary1
                     {
                         string d = c.Feature1 + "!" + c.Feature2;
                         v.Add(new AnomalyReport(d, (i + 1)));
-                        Console.WriteLine(d);
                     }
                 }
             }
