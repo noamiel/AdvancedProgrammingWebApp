@@ -109,23 +109,13 @@ app.post('/detect', async (req, res) => {
         // before submitting, we have to change it to print error and remove model
         if (error) throw error;
         models_list[id].status = "ready"
-        let A = new Anomaly(result_to_anomalies(result))
-        let return_data = {
-            anomalies: A,
-            reason: "whatever"
-        }
-        res.send(return_data)
+        B = {}
+        result.forEach(e => {
+            B[e.description] = new Span(e.firstTimeStep, e.lastTimeStep)
+        });
+        res.send(B)
     })
 });
-
-function result_to_anomalies(result) {
-    B = {}
-    result.forEach(e => {
-        B[e.description] = new Span(e.firstTimeStep, e.lastTimeStep)
-    });
-    return B;
-  }
-
 
 // tarin new model. this is the request your'e looking for
 app.post('/csv/model', async (req, res) => {
@@ -211,68 +201,6 @@ app.get('/api/model', (req, res) => {
 });
 
 
-
-/* // train new model - REST api
-// not actually needed but I keep it anyway in case some of what written in here would be useful/
-app.post('/api/model', (req, res) => {
-    // get model type from query line. send by /?model_type=<model_type>
-    const schema_query = Joi.object({
-        model_type: Joi.string().valid('regression', 'hybrid').required()
-    });
-
-    // validate query
-    const result_query = schema_query.validate(req.query);
-    console.log(result_query);
-
-    // throw an error if wrong
-    if (result_query.error) {
-        res.status(400).send(result_query.error.details[0].message);
-        return;
-    }
-
-    train_data = req.body.train_data;
-    if (train_data === undefined)
-        return res.status(400).send("train_data is required in request body");
-    let data = new Data(train_data);
-
-    let id = models_list.length
-    let model = new Model(id, (new Date()).toUTCString(), "pending")
-    models_list.push(model)
-
-    // run learn function based on type
-    learn_dictionary[req.query.model_type](data.dataJSON, function (error, result) {
-        if (error) throw error;
-        console.log(`the result is: ${result}`);
-        models_list[id].status = "ready"
-    })
-
-    // push new model to list and send back by convention
-    // models_list[id].status = "ready"
-    res.send(model)
-});
-
-// the same as the previous one
-app.get('/api/model/:id', (req, res) => {
-    // first find the given model
-    let model = models.find(c => c.id === parseInt(req.params.id));
-    if (!model) return res.status(404).send("the model was not found");
-
-    // return it if found
-    res.send(model);
-});
-
-// again, not needed
-app.delete('/api/model', (req, res) => {
-    // first find the given model
-    let model = models.find(c => c.id === parseInt(req.params.id));
-    if (!model) return res.status(404).send("the model was not found");
-
-    // delete it if found
-    const index = models.indexOf(model);
-    models.splice(index, 1);
-    res.send(model);
-}); */
-
 // those are JavaScript classes which are needed for the project
 // don't change `Model` but you can change the rest of them
 class Model {
@@ -284,38 +212,6 @@ class Model {
     // some extra function may be needed
 }
 
-class Anomaly {
-    constructor(anomalies_dict) {
-        this.anomalies_dict = anomalies_dict;
-        // this.reason = reason;
-    }
-    // some extra function may be needed
-}
-
-class AnomalyReport {
-    #span
-    #description
-    constructor(start_time, end_time, description) {
-        this.#span = new Span(start_time, end_time)
-        this.#description = description
-    }
-
-    get description() {
-        return this.#description
-    }
-    get span() {
-        return this.#span
-      }
-    set span(span) {
-    this.#span = span
-    }
-    set_start_time(start_time) {
-        this.#span = new Span(start_time, this.#span.end_time)
-      }
-    set_end_time(end_time) {
-        this.#span = new Span(this.#span.start_time, end_time)
-    }
-}
 class Span {
     constructor(start_time, end_time) {
         this.start_time = start_time;
