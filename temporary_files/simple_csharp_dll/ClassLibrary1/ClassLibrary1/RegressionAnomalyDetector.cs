@@ -42,14 +42,14 @@ namespace ClassLibrary1
 
                 LearnHelper(ts, max, f1, f2, ps);
             }
-            Console.WriteLine(cf.Count());
+            // Console.WriteLine(cf.Count());
         }
 
         public static void LearnHelper(TimeSeries ts, double p/*pearson*/, string f1, string f2, Point[] ps)
         {
             if (p > threshold)
             {
-                //Console.WriteLine(f1 + "   " + f2);
+                // Console.WriteLine(f1 + "   " + f2);
                 int len = ts.GetRowSize();
                 Line reg = AnomalyDetectionUtil.LinearReg(ps, len);
                 CorrelatedFeatures c = new CorrelatedFeatures(f1, f2, p, reg,

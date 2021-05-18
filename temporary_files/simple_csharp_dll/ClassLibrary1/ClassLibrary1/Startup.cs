@@ -29,8 +29,7 @@ namespace ClassLibrary1
                 RegressionAnomalyDetector.LearnNormal(ts_learn);
                 l = RegressionAnomalyDetector.Detect(ts_anomaly);
             }
-                
-            return l;
+            return new AnomalyDiffReport(l).detectedTimes;
         }
 
         public async Task<object> DetectCSV(dynamic input)
@@ -49,38 +48,9 @@ namespace ClassLibrary1
             else
                 l = RegressionAnomalyDetector.Detect(ts);
             // System.Console.WriteLine(l.Count());
-            return l;
+            return new AnomalyDiffReport(l).detectedTimes;
+            // return l;
         }
 
-        public async Task<object> Regression(dynamic input)
-        {
-            await Task.Delay(3000);
-            IDictionary<string, object> d = (IDictionary<string, object>)(input);
-            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
-            foreach (KeyValuePair<string, object> entry in d)
-            {
-                object[] anArray = (object[])entry.Value;
-                jsonDict[entry.Key] = new List<double>();
-                foreach (var item in anArray)
-                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
-            }
-
-            return jsonDict[jsonDict.Keys.First()][0];
-        }
-
-        public async Task<object> Hybrid(dynamic input)
-        {
-            IDictionary<string, object> d = (IDictionary<string, object>)(input);
-            Dictionary<string, List<double>> jsonDict = new Dictionary<string, List<double>>();
-            foreach (KeyValuePair<string, object> entry in d)
-            {
-                object[] anArray = (object[])entry.Value;
-                jsonDict[entry.Key] = new List<double>();
-                foreach (var item in anArray)
-                    jsonDict[entry.Key].Add(double.Parse(item.ToString()));
-            }
-            await Task.Delay(3000);
-            return jsonDict[jsonDict.Keys.First()][0];
-        }
     }
 }

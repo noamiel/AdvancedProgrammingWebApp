@@ -57,7 +57,7 @@ app.get('/', (req, res) => {
 })
 
 // send via post 2 csv files + model type (as query) and get some dummy data (as for now)
-app.post('/dummy_detect', async (req, res) => {
+app.post('/detect', async (req, res) => {
     // get model type from query line. send by /?model_type=<model_type>
     const schema_query = Joi.object({
         model_type: Joi.string().valid('regression', 'hybrid').required()
@@ -104,53 +104,26 @@ app.post('/dummy_detect', async (req, res) => {
         "passed_data_type": "csv"
     }
 
-    // let r;
     // run c# code asynchoniously
     learn_from_csv(data, function (error, result) {
         // before submitting, we have to change it to print error and remove model
         if (error) throw error;
         models_list[id].status = "ready"
-        console.log(result.length)
-        console.log(result[0])
-        // r = result
-        // TODO: put this whole thing in the c# code instead (according to what I did at ML #1)
-        // let B = new Anomaly(result_to_anomalies(result))
+        let A = new Anomaly(result_to_anomalies(result))
+        let return_data = {
+            anomalies: A,
+            reason: "whatever"
+        }
+        res.send(return_data)
     })
-
-    // create dummy Anomaly
-    let A = new Anomaly({
-        col1: [new Span(1, 5), new Span(7,22)],
-        col2: [new Span(10, 15), new Span(33,100)],
-        col3: [new Span(12, 20), new Span(51,52), new Span(62,84)],
-    });
-    // create and return data
-    let return_data = {
-        anomalies: A,
-        reason: "whatever"
-    }
-    res.send(return_data)
 });
 
 function result_to_anomalies(result) {
-    B = new Anomaly([])
-    result.forEach(element => {
-        let d = B.anomalies_dict.find(c => c.description === element.Description);
-        if (!d) {
-            console.log(element)
-            console.log("element not found. creating new element")
-            B.anomalies_dict.push(new AnomalyReport(element.Timestep, element.Timestep, element.Description))
-        } else {
-            console.log("found!")
-            if (element.Timestep === d.start_time - 1)
-                d.set_start_time(element.Timestep)
-            if (element.Timestep === d.end_time + 1)
-                d.set_end_time(element.Timestep)
-            console.log(B.anomalies_dict.find(c => c.description === element.Description))
-        }
-
+    B = {}
+    result.forEach(e => {
+        B[e.description] = new Span(e.firstTimeStep, e.lastTimeStep)
     });
-    console.log(B.anomalies_dict.length)
-    return result;
+    return B;
   }
 
 
