@@ -6,7 +6,7 @@ namespace ClassLibrary1
 {
     internal class RegressionAnomalyDetector : AnomalyDetector
     {
-        private static int total = 0;
+        // private static int total = 0;
 
         public static void LearnNormal(TimeSeries ts)
         {
@@ -42,10 +42,10 @@ namespace ClassLibrary1
 
                 LearnHelper(ts, max, f1, f2, ps);
             }
-            // Console.WriteLine(cf.Count());
+            Console.WriteLine(cf.Count());
         }
 
-        public static void LearnHelper(TimeSeries ts, double p/*pearson*/, string f1, string f2, Point[] ps)
+        public static void LearnHelper(TimeSeries ts, double p /*pearson*/, string f1, string f2, Point[] ps)
         {
             if (p > threshold)
             {
@@ -55,7 +55,7 @@ namespace ClassLibrary1
                 CorrelatedFeatures c = new CorrelatedFeatures(f1, f2, p, reg,
                     RegressionAnomalyDetector.FindThreshold(ps, len, reg) * 1.1, 0, 0, false);
                 cf.Add(c);
-                //Console.WriteLine(c.feature1 + ", " + c.feature2 + " , " + c.threshold);
+                Console.WriteLine(c.Feature1 + ", " + c.Feature2 + " , " + c.Threshold);
             }
         }
 
@@ -68,11 +68,13 @@ namespace ClassLibrary1
                 List<double> y = ts.GetAttributeData(c.Feature2);
                 for (int i = 0; i < Math.Min(x.Count, y.Count); i++)
                 {
+                    
                     if (IsAnomalous(x.ElementAt(i), y.ElementAt(i), c))
                     {
+                        Console.WriteLine($" - {i}");
                         string d = c.Feature1 + "!" + c.Feature2;
                         v.Add(new AnomalyReport(d, (i + 1)));
-                        total++;
+                        // total++;
                         // Console.WriteLine(total++);
                     }
                 }
@@ -82,7 +84,10 @@ namespace ClassLibrary1
 
         public static bool IsAnomalous(double x, double y, CorrelatedFeatures c)
         {
-            return (Math.Abs(y - c.LinReg.F(x)) > c.Threshold);
+            double diff = Math.Abs(y - c.LinReg.F(x));
+            if (c.Feature1 == "throttle" && c.Feature2 == "engine_rpm" && diff > 1000)
+                Console.Write($"diff = {diff} < {c.Threshold}");
+            return (diff > c.Threshold);
         }
     }
 }

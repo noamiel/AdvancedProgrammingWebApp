@@ -108,12 +108,13 @@ dist
 temporary_files/simple_csharp_project
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/obj
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/Properties
-temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin
+# temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin/Debug/
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*.config
 temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*proj
 temporary_files/simple_csharp_dll/ClassLibrary1/*.sln
 temporary_files/simple_csharp_dll/ClassLibrary1/packages
 temporary_files/simple_csharp_dll/ClassLibrary1/.vs
+# temporary_files\simple_csharp_dll\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll
 
 # REST_API/uploads/
 REST_API/uploads/reg_flight.csv
