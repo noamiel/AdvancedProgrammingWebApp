@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\anomallyDetectorDLL.csproj": {}
+    "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\anomallyDetectorDLL.csproj": {}
   },
   "projects": {
-    "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\anomallyDetectorDLL.csproj": {
+    "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\anomallyDetectorDLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\anomallyDetectorDLL.csproj",
+        "projectUniqueName": "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\anomallyDetectorDLL.csproj",
         "projectName": "anomallyDetectorDLL",
-        "projectPath": "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\anomallyDetectorDLL.csproj",
-        "packagesPath": "C:\\Users\\omerz\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\obj\\",
+        "projectPath": "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\anomallyDetectorDLL.csproj",
+        "packagesPath": "C:\\Users\\buein\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\omerz\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\buein\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -49,18 +49,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.14, 3.1.14]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

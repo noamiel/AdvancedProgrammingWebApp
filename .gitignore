@@ -114,7 +114,11 @@ temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/*proj
 temporary_files/simple_csharp_dll/ClassLibrary1/*.sln
 temporary_files/simple_csharp_dll/ClassLibrary1/packages
 temporary_files/simple_csharp_dll/ClassLibrary1/.vs
-# temporary_files\simple_csharp_dll\ClassLibrary1\ClassLibrary1\bin\Debug\ClassLibrary1.dll
 
-# REST_API/uploads/
-REST_API/uploads/reg_flight.csv
+temporary_files/simple_csharp_dll/ClassLibrary1/ClassLibrary1/bin/Debug/ClassLibrary1.pdb
+temporary_files/ConsoleApp1/.vs
+temporary_files/ConsoleApp1/bin/Debug/netcoreapp3.1
+temporary_files/ConsoleApp1/.vs/anomallyDetectorDLL/v16/.suo
+temporary_files/ConsoleApp1/obj/anomallyDetectorDLL.csproj.nuget.g.props
+temporary_files/ConsoleApp1/obj/anomallyDetectorDLL*
+temporary_files/ConsoleApp1/bin/Debug/netcoreapp3.1/anomallyDetectorDLL.dll

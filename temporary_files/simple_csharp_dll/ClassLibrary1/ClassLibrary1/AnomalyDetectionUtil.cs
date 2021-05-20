@@ -76,6 +76,24 @@ namespace ClassLibrary1
             X = x;
             Y = y;
         }
+
+        public Point Subtract(Point p)
+        {
+            return new Point(X - p.X, Y - p.Y);
+        }
+
+        public double Distance(Point p)
+        {
+            double dx = X - p.X;
+            double dy = Y - p.Y;
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+
+        // Signed area / determinant thing
+        public double Cross(Point p)
+        {
+            return X * p.Y - Y * p.X;
+        }
     }
 
     public class Line

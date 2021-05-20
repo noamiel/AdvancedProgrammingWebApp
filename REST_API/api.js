@@ -64,7 +64,7 @@ app.post('/detect', async (req, res) => {
     });
 
     // validate query
-    const result_query = schema_query.validate(req.body);
+    const result_query = schema_query.validate(req.query);
 
     // throw an error if wrong
     if (result_query.error) {
@@ -97,6 +97,7 @@ app.post('/detect', async (req, res) => {
     const uploaded_anomaly_name = `${process.cwd()}/uploads/${anomaly_csv.name}`
 
     // run learn function based on type
+    // console.log(`model_type: ${req.query.model_type}`)
     let data = {
         "csv_learn": uploaded_learn_name, 
         "csv_anomaly": uploaded_anomaly_name, 
@@ -104,10 +105,11 @@ app.post('/detect', async (req, res) => {
         "passed_data_type": "csv"
     }
 
-    // run c# code asynchoniously
+    // run c# code asynchoniously (TODO: figure out what ecxatly should be ran this way)
     learn_from_csv(data, function (error, result) {
         // before submitting, we have to change it to print error and remove model
-        if (error) throw error;
+        // if (error) throw error;
+        if (error) return res.status(400).send(`error passed from model: ${error.message}`)
         models_list[id].status = "ready"
         B = {}
         result.forEach(e => {
@@ -116,60 +118,6 @@ app.post('/detect', async (req, res) => {
         res.send(B)
     })
 });
-
-// tarin new model. this is the request your'e looking for
-app.post('/csv/model', async (req, res) => {
-
-    // get model type from query line. send by /?model_type=<model_type>
-    const schema_query = Joi.object({
-        model_type: Joi.string().valid('regression', 'hybrid').required()
-    });
-
-    // validate query
-    const result_query = schema_query.validate(req.query);
-
-    // throw an error if wrong
-    if (result_query.error) {
-        res.status(400).send(result_query.error.details[0].message);
-        return;
-    }
-
-    if (!req.files)
-        return res.status(400).send("No file uploaded");
-    if (!req.files.learn_csv)
-        return res.status(400).send("`learn_csv` was not uploaded");
-    
-    // Use the name of the input field to retrieve the uploaded file
-    let learn_csv = req.files.learn_csv;
-    if (!learn_csv.name.endsWith(".csv"))
-        return res.status(400).send("file must be of csv type")
-
-    // Use the mv() method to place the file in upload directory (i.e. "uploads")
-    learn_csv.mv('./uploads/' + learn_csv.name);
-
-    // create model
-    let id = models_list.length
-    let model = new Model(id, (new Date()).toUTCString(), "pending")
-    models_list.push(model)
-    const uploaded_file_name = `${process.cwd()}/uploads/${learn_csv.name}`
-
-    // run learn function based on type
-    let data = {
-        "csv_name": uploaded_file_name, 
-        "model_type": req.query.model_type, 
-        "passed_data_type": "csv"
-    }
-
-    // run c# code asynchoniously
-    learn_from_csv(data, function (error, result) {
-        if (error) throw error;
-        models_list[id].status = "ready"
-    })
-
-    // push new model to list and send back by convention
-    res.send(model)
-});
-
 
 // using this request you can see the uploaded models and see if the model had been processed yet
 app.get('/api/models', (req, res) => {

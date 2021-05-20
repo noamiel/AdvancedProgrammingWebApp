@@ -11,3 +11,16 @@ C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcor
 C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.dll
 C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.pdb
 C:\Users\omerz\Desktop\אוניברסיטה\web app\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.genruntimeconfig.cache
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.csprojAssemblyReference.cache
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.AssemblyInfoInputs.cache
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.AssemblyInfo.cs
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.csproj.CoreCompileInputs.cache
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.dll
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.pdb
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.exe
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.deps.json
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.runtimeconfig.json
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.runtimeconfig.dev.json
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.dll
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\bin\Debug\netcoreapp3.1\anomallyDetectorDLL.pdb
+C:\Users\buein\source\repos\AdvancedProgrammingWebApp\temporary_files\ConsoleApp1\obj\Debug\netcoreapp3.1\anomallyDetectorDLL.genruntimeconfig.cache

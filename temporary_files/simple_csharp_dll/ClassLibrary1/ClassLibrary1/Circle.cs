@@ -76,12 +76,12 @@ namespace ClassLibrary1
             {
                 return Trivial(R);
             }
-            /*
+            
 			Random rnd = new Random();
 			int i = rnd.Next(0, n);
-			Point p = new Point(P[i].x, P[i].y);
-			*/
-            Point p = P[0];
+			Point p = new Point(P[i].X, P[i].Y);
+			
+            // Point p = P[0];
 
             Point temp = P[0];
             P[0] = P[n - 1];

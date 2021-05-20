@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WTUPX2upZ4XVs5J9EYz492ewA9ujoHJZ3lkh4G3ihx0rNZgPilgFFt+PCkU+bgQ/jAheqon/u3lKhFqyPQKIYQ==",
+  "dgSpecHash": "Ino2C/tW/ExoGm+NDSBUruA7dM015/1pM+zQYzNeB/HWXtJT303rusQSyaTWezDXKGRugCSt3sshKbh0y7k+Sw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\omerz\\Desktop\\אוניברסיטה\\web app\\ConsoleApp1\\anomallyDetectorDLL.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\omerz\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.14\\microsoft.netcore.app.host.win-x64.3.1.14.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\buein\\source\\repos\\AdvancedProgrammingWebApp\\temporary_files\\ConsoleApp1\\anomallyDetectorDLL.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

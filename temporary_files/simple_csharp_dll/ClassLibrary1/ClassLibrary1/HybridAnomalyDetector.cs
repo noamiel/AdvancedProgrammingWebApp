@@ -9,7 +9,6 @@ namespace ClassLibrary1
         public static void LearnNormal(TimeSeries ts)
         {
             List<string> atts = ts.GettAttributes();
-            // Console.WriteLine(atts[0]);
             int len = ts.GetRowSize();
             int attsSize = atts.Count;
             double[,] vals = new double[attsSize, len];
@@ -45,7 +44,13 @@ namespace ClassLibrary1
             }
         }
 
-        private static void LearnHelper(TimeSeries ts, double p/*pearson*/, string f1, string f2, Point[] ps)
+        internal static void Reset()
+        {
+            // Console.WriteLine("Hybrid Reset");
+            cf = new List<CorrelatedFeatures>();
+        }
+
+        private static void LearnHelper(TimeSeries ts, double p /*pearson*/, string f1, string f2, Point[] ps)
         {
             RegressionAnomalyDetector.LearnHelper(ts, p, f1, f2, ps);
             if (p > 0.5 && p < threshold)

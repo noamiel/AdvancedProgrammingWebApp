@@ -2,9 +2,8 @@
 
 web app project for advanced programming project in BIU
 
-## required installments
+## required installations
 
-- npm -i install nodemon
 - npm -i install express
 - npm -i install express-fileupload
 - npm -i install morgan
